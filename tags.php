@@ -34,13 +34,13 @@
             /**
              * Etape 1: Le mur concerne un mot-clé en particulier
              */
-            $tagId = intval($_GET['tag_id']);
+            require 'id.php'
             ?>
             <?php
             /**
              * Etape 2: se connecter à la base de donnée
              */
-            $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
+            require 'connexion.php'
             ?>
 
             <aside>

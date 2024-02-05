@@ -35,13 +35,13 @@
             /**
              * Etape 1: Le mur concerne un utilisateur en particulier
              */
-            $userId = intval($_GET['user_id']);
+            require 'id.php'
             ?>
             <?php
             /**
              * Etape 2: se connecter à la base de donnée
              */
-            $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
+            require 'connexion.php'
             ?>
 
             <aside>

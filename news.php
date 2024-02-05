@@ -66,20 +66,14 @@
                  */
 
                 // Etape 1: Ouvrir une connexion avec la base de donnée.
-                $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
+                require 'connexion.php'
+                ?>
                 //verification
-                if ($mysqli->connect_errno)
-                {
-                    echo "<article>";
-                    echo("Échec de la connexion : " . $mysqli->connect_error);
-                    echo("<p>Indice: Vérifiez les parametres de <code>new mysqli(...</code></p>");
-                    echo "</article>";
-                    exit();
-                }
 
                 // Etape 2: Poser une question à la base de donnée et récupérer ses informations
                 // cette requete vous est donnée, elle est complexe mais correcte, 
                 // si vous ne la comprenez pas c'est normal, passez, on y reviendra
+                <?php 
                 $laQuestionEnSql = "
                     SELECT posts.content,
                     posts.created,
