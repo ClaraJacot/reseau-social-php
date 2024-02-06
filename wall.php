@@ -1,3 +1,24 @@
+<?php
+session_start();
+?>
+<?php
+/**
+ * Etape 1: Le mur concerne un utilisateur en particulier
+ * La première étape est donc de trouver quel est l'id de l'utilisateur
+ * Celui ci est indiqué en parametre GET de la page sous la forme user_id=...
+ * Documentation : https://www.php.net/manual/fr/reserved.variables.get.php
+ * ... mais en résumé c'est une manière de passer des informations à la page en ajoutant des choses dans l'url
+ */
+require 'id.php'
+?>
+<?php
+/**
+ * Etape 2: se connecter à la base de donnée
+ */
+require 'connexion.php'
+?>
+?>
+
 <!doctype html>
 <html lang="fr">
     <head>
@@ -11,8 +32,8 @@
             <img src="resoc.jpg" alt="Logo de notre réseau social"/>
             <nav id="menu">
                 <a href="news.php">Actualités</a>
-                <a href="wall.php?user_id=5">Mur</a>
-                <a href="feed.php?user_id=5">Flux</a>
+                <a href="wall.php?user_id=<?php echo $userId?>">Mur</a>
+                <a href="feed.php?user_id=<?php echo $userId?>">Flux</a>
                 <a href="tags.php?tag_id=1">Mots-clés</a>
             </nav>
             <nav id="user">
@@ -26,22 +47,7 @@
             </nav>
         </header>
         <div id="wrapper">
-            <?php
-            /**
-             * Etape 1: Le mur concerne un utilisateur en particulier
-             * La première étape est donc de trouver quel est l'id de l'utilisateur
-             * Celui ci est indiqué en parametre GET de la page sous la forme user_id=...
-             * Documentation : https://www.php.net/manual/fr/reserved.variables.get.php
-             * ... mais en résumé c'est une manière de passer des informations à la page en ajoutant des choses dans l'url
-             */
-            require 'id.php'
-            ?>
-            <?php
-            /**
-             * Etape 2: se connecter à la base de donnée
-             */
-            require 'connexion.php'
-            ?>
+           
 
             <aside>
                 <?php
@@ -60,6 +66,9 @@
                     <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <?php echo $user['alias']?>
                         (n° <?php echo $userId ?>)
                     </p>
+                    <?php
+                
+                    ?>
                 </section>
             </aside>
             <main>

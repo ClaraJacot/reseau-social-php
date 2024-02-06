@@ -1,3 +1,3 @@
 <?php
-$userId = intval($_GET['user_id']);
+$userId = $_SESSION['connected_id'];
 ?>
