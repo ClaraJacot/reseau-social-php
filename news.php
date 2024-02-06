@@ -1,3 +1,6 @@
+<?php
+require 'connexion.php'
+?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -38,19 +41,7 @@
                   @todo: doit etre retiré -->
                               
 
-                <?php
-                /*
-                  // C'est ici que le travail PHP commence
-                  // Votre mission si vous l'acceptez est de chercher dans la base
-                  // de données la liste des 5 derniers messsages (posts) et
-                  // de l'afficher
-                  // Documentation : les exemples https://www.php.net/manual/fr/mysqli.query.php
-                  // plus généralement : https://www.php.net/manual/fr/mysqli.query.php
-                 */
-
-                // Etape 1: Ouvrir une connexion avec la base de donnée.
-                require 'connexion.php'
-                ?>
+                
                 //verification
 
                 // Etape 2: Poser une question à la base de donnée et récupérer ses informations

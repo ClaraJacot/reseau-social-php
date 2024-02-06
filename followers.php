@@ -1,3 +1,6 @@
+<?php
+require 'connexion.php'
+?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -32,19 +35,12 @@
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez la liste des personnes qui
                         suivent les messages de l'utilisatrice
-                        n° <?php echo intval($_GET['user_id']) ?></p>
+                        n° <?php echo $userId ?></p>
 
                 </section>
             </aside>
             <main class='contacts'>
-                <?php
-                // Etape 1: récupérer l'id de l'utilisateur
-                require 'id.php'
-                ?>
-                <?php
-                // Etape 2: se connecter à la base de donnée
-                require 'connexion.php'
-                ?>
+                
                 <?php
                 // Etape 3: récupérer le nom de l'utilisateur
                 $laQuestionEnSql = "

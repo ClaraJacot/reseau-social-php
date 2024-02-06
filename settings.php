@@ -1,3 +1,6 @@
+<?php
+require 'connexion.php'
+?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -33,28 +36,12 @@
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez les informations de l'utilisatrice
-                        n° <?php echo intval($_GET['user_id']) ?></p>
+                        n° <?php echo $userId ?></p>
 
                 </section>
             </aside>
             <main>
-                <?php
-                /**
-                 * Etape 1: Les paramètres concernent une utilisatrice en particulier
-                 * La première étape est donc de trouver quel est l'id de l'utilisatrice
-                 * Celui ci est indiqué en parametre GET de la page sous la forme user_id=...
-                 * Documentation : https://www.php.net/manual/fr/reserved.variables.get.php
-                 * ... mais en résumé c'est une manière de passer des informations à la page en ajoutant des choses dans l'url
-                 */
-                require 'id.php'
-                ?>
-                <?php
-
-                /**
-                 * Etape 2: se connecter à la base de donnée
-                 */
-                require 'connexion.php'
-                ?>
+                
 
                 <?php
                 /**
