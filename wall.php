@@ -15,16 +15,16 @@ require 'connexion.php'
             <img src="resoc.jpg" alt="Logo de notre réseau social"/>
             <nav id="menu">
                 <a href="news.php">Actualités</a>
-                <a href="wall.php?user_id=<?php echo $userId?>">Mur</a>
-                <a href="feed.php?user_id=<?php echo $userId?>">Flux</a>
+                <a href="wall.php?user_id=<?php echo $connectedId?>">Mur</a>
+                <a href="feed.php?user_id=<?php echo $connectedId?>">Flux</a>
                 <a href="tags.php?tag_id=1">Mots-clés</a>
             </nav>
             <nav id="user">
                 <a href="#">Profil</a>
                 <ul>
-                    <li><a href="settings.php?user_id=<?php echo $userId?>">Paramètres</a></li>
-                    <li><a href="followers.php?user_id=<?php echo $userId?>">Mes suiveurs</a></li>
-                    <li><a href="subscriptions.php?user_id=<?php echo $userId?>">Mes abonnements</a></li>
+                    <li><a href="settings.php?user_id=<?php echo $connectedId?>">Paramètres</a></li>
+                    <li><a href="followers.php?user_id=<?php echo $connectedId?>">Mes suiveurs</a></li>
+                    <li><a href="subscriptions.php?user_id=<?php echo $connectedId?>">Mes abonnements</a></li>
                 </ul>
 
             </nav>
@@ -42,6 +42,36 @@ require 'connexion.php'
                 $user = $lesInformations->fetch_assoc();
                 //@todo: afficher le résultat de la ligne ci dessous, remplacer XXX par l'alias et effacer la ligne ci-dessous
                 //echo "<pre>" . print_r($user, 1) . "</pre>";
+                $enCoursDeTraitement = isset($_POST['message']);
+                    if ($enCoursDeTraitement)
+                    {
+                        // on ne fait ce qui suit que si un formulaire a été soumis.
+                        // Etape 2: récupérer ce qu'il y a dans le formulaire @todo: c'est là que votre travaille se situe
+                        // observez le résultat de cette ligne de débug (vous l'effacerez ensuite)
+                        // echo "<pre>" . print_r($_POST, 1) . "</pre>";
+                        // et complétez le code ci dessous en remplaçant les ???
+                        $authorId = $connectedId;
+                        $postContent = $_POST['message'];
+
+
+                        //Etape 3 : Petite sécurité
+                        // pour éviter les injection sql : https://www.w3schools.com/sql/sql_injection.asp
+                        //$authorId = intval($mysqli->real_escape_string($authorId));
+                        //$postContent = $mysqli->real_escape_string($postContent);
+                        //Etape 4 : construction de la requete
+                        $lInstructionSql = "INSERT INTO posts (id, user_id, content, created)
+                                VALUES (NULL, $authorId, '$postContent' , NOW())";
+                         //echo $lInstructionSql;
+                        // Etape 5 : execution
+                        $ok = $mysqli->query($lInstructionSql);
+                        if ( ! $ok)
+                        {
+                            echo "Impossible d'ajouter le message: " . $mysqli->error;
+                        } else
+                        {
+                            echo "Message posté en tant que :" [$authorId];
+                        }
+                    }
                 ?>
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
@@ -49,6 +79,16 @@ require 'connexion.php'
                     <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <?php echo $user['alias']?>
                         (n° <?php echo $userId ?>)
                     </p>
+                    <p><?php if ($connectedId == $userId) :?>
+                        <form action="wall.php?user_id=<?php echo  $connectedId?>" method="post">
+                        <input type='hidden' name='???' value='achanger'>
+                        <dl>
+                        <dt><label for='message'>Post</label></dt>
+                        <dd><textarea name='message'></textarea></dd>
+                        </dl>
+                        <input type='submit'>
+                    </form>
+                    <?php endif; ?> </p>  
                 </section>
             </aside>
             <main>
