@@ -65,6 +65,8 @@
                 <article>
                     <img src="user.jpg" alt="blason"/>
                     <h3><?php echo $user['alias']?></h3>
+                    <a href="wall.php?user_id=<?php echo $user['id'] ?>">Voir son mur</a>                    
+
                     <p><?php echo $user['id']?></p>                    
                 </article>
                 <?php } ?>

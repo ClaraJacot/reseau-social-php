@@ -94,6 +94,8 @@
                     ?>
                     <article>
                         <h3><?php echo $tag['alias']?></h3>
+                        <a href="wall.php?user_id=<?php echo $tag['id'] ?>">Voir son mur</a>                    
+
                         <p><?php echo $tag['id']?></p>
                         <nav>
                             <a href="wall.php?user_id=123">Mur</a>
