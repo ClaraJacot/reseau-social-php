@@ -8,4 +8,5 @@ if ($mysqli->connect_errno)
     echo "</article>";
     exit();
 }
+
 ?>
