@@ -1,3 +1,6 @@
+<?php
+require 'connexion.php'
+?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -36,12 +39,7 @@
              */
             $tagId = intval($_GET['tag_id']);
             ?>
-            <?php
-            /**
-             * Etape 2: se connecter à la base de donnée
-             */
-            require 'connexion.php'
-            ?>
+            
 
             <aside>
                 <?php
