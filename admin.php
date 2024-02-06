@@ -1,11 +1,6 @@
 <?php
-session_start();
-if ( !isset ($_SESSION['connected_id'])  ){
-    $userId = intval($_GET['connected_id']);
-}
-
+require 'connexion.php'
 ?>
-
 <!doctype html>
 <html lang="fr">
     <head>
@@ -19,16 +14,16 @@ if ( !isset ($_SESSION['connected_id'])  ){
             <img src="resoc.jpg" alt="Logo de notre réseau social"/>
             <nav id="menu">
                 <a href="news.php">Actualités</a>
-                <a href="wall.php?user_id=5">Mur</a>
-                <a href="feed.php?user_id=5">Flux</a>
+                <a href="wall.php?user_id=<?php echo $connectedId?>">Mur</a>
+                <a href="feed.php?user_id=<?php echo $connectedId?>">Flux</a>
                 <a href="tags.php?tag_id=1">Mots-clés</a>
             </nav>
             <nav id="user">
                 <a href="#">Profil</a>
                 <ul>
-                    <li><a href="settings.php?<?php echo $user['id'] ?>">Paramètres</a></li>
-                    <li><a href="followers.php?<?php echo $user['id'] ?>">Mes suiveurs</a></li>
-                    <li><a href="subscriptions.php?<?php echo $user['id'] ?>">Mes abonnements</a></li>
+                    <li><a href="settings.php?user_id=<?php echo $connectedId?>">Paramètres</a></li>
+                    <li><a href="followers.php?user_id=<?php echo $connectedId?>">Mes suiveurs</a></li>
+                    <li><a href="subscriptions.php?user_id=<?php echo $connectedId?>">Mes abonnements</a></li>
                 </ul>
 
             </nav>
@@ -39,7 +34,7 @@ if ( !isset ($_SESSION['connected_id'])  ){
          * Etape 1: Ouvrir une connexion avec la base de donnée.
          */
         // on va en avoir besoin pour la suite
-        require 'connexion.php'
+        //require 'connexion.php'
         //verification
         
         ?>
@@ -106,11 +101,11 @@ if ( !isset ($_SESSION['connected_id'])  ){
 
                         <p><?php echo $tag['id']?></p>
                         <nav>
-                            <a href="wall.php?user_id=123">Mur</a>
-                            | <a href="feed.php?user_id=123">Flux</a>
-                            | <a href="settings.php?user_id=123">Paramètres</a>
-                            | <a href="followers.php?user_id=123">Suiveurs</a>
-                            | <a href="subscriptions.php?user_id=123">Abonnements</a>
+                            <a href="wall.php?user_id=<?php echo $tag['id'] ?>">Mur</a>
+                            | <a href="feed.php?user_id=<?php echo $tag['id'] ?>">Flux</a>
+                            | <a href="settings.php?user_id=<?php echo $tag['id'] ?>">Paramètres</a>
+                            | <a href="followers.php?user_id=<?php echo $tag['id'] ?>">Suiveurs</a>
+                            | <a href="subscriptions.php?user_id=<?php echo $tag['id'] ?>">Abonnements</a>
                         </nav>
                     </article>
                 <?php } ?>

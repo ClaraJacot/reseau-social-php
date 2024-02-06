@@ -1,6 +1,11 @@
 <?php
 session_start();
-$userId = $_SESSION['connected_id'];
+
+$userId =  intval($_GET['user_id']);
+$connectedId = $_SESSION['connected_id'];
+
+
+
 $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
 if ($mysqli->connect_errno)
 {
