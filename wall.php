@@ -113,7 +113,7 @@ require 'connexion.php'
                     <?php else:?>
                         <form action="wall.php?user_id=<?php echo  $userId?>" method="post">
                         
-                        <input type='submit' name='button'>
+                        <button type='submit' name='button'>Suivre</button>
                     <?php endif; ?> </p>  
                     
                 </section>
