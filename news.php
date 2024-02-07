@@ -51,6 +51,7 @@ require 'connexion.php'
                 $laQuestionEnSql = "
                     SELECT posts.content,
                     posts.created,
+                    posts.id,
                     users.alias as author_name, 
                     posts.user_id, 
                     count(likes.id) as like_number,  
@@ -86,7 +87,27 @@ require 'connexion.php'
                     // ci-dessous par les bonnes valeurs cachées dans la variable $post 
                     // on vous met le pied à l'étrier avec created
                     // 
+                    
                     // avec le ? > ci-dessous on sort du mode php et on écrit du html comme on veut... mais en restant dans la boucle
+                    $enCoursDeTraitement3 = isset($_POST['like']);
+                if($enCoursDeTraitement3) {
+                    $liker1 = $connectedId;
+                    $likedPost1 = $_POST['postId'];
+                    
+                    $lInstructionSql3 = "INSERT INTO likes (id, user_id, post_id)
+                        VALUES (NULL, $liker1, $likedPost1)";
+                        
+                
+                
+                    $ok = $mysqli->query($lInstructionSql3);
+                    if (! $ok)
+                    {
+                        echo "Impossible de liker ce post." . $mysqli->error;                 
+                    } else 
+                    {
+                        echo "Post liké";
+                    } 
+                }
                     ?>
                     <article>
                         <h3>
@@ -100,6 +121,10 @@ require 'connexion.php'
                         </div>
                         <footer>
                             <small>♥<?php echo $post['like_number']?></small>
+                            <form action="news.php?user_id=<?php echo $connectedId ?>" method ="post">
+                                <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">
+                                <button type='submit' name='like'>Aimer</button>
+                            </form>
                             <a href="">#<?php echo $post['taglist']?></a>,
                         </footer>
                     </article>
