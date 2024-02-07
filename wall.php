@@ -33,6 +33,7 @@ require 'connexion.php'
             
 
             <aside>
+                <p>
                 <?php
                 /**
                  * Etape 3: récupérer le nom de l'utilisateur
@@ -52,6 +53,7 @@ require 'connexion.php'
                         // et complétez le code ci dessous en remplaçant les ???
                         $authorId = $connectedId;
                         $postContent = $_POST['message'];
+                        $namePost = $user['alias'];
 
 
                         //Etape 3 : Petite sécurité
@@ -69,10 +71,30 @@ require 'connexion.php'
                             echo "Impossible d'ajouter le message: " . $mysqli->error;
                         } else
                         {
-                            echo "Message posté en tant que :" [$authorId];
+                            echo "Message posté en tant que " , $namePost;
                         }
                     }
-                ?>
+                
+                $enCoursDeTraitement2 = isset($_POST['button']);
+                if($enCoursDeTraitement2) {
+                    $followed = $userId;
+                    $following = $connectedId;
+                    $nameFollowed = $user['alias'];
+                    $lInstructionSql2 = "INSERT INTO followers (id, followed_user_id, following_user_id)
+                        VALUES (NULL, $followed, $following)";
+                
+                
+                    $ok = $mysqli->query($lInstructionSql2);
+                    if (! $ok)
+                    {
+                        echo "Impossible de suivre cette personne." . $mysqli->error;                 
+                    } else 
+                    {
+                        echo "Vous suivez bien " ,$nameFollowed;
+                    } 
+                }
+                ?> </p>
+
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
@@ -88,12 +110,17 @@ require 'connexion.php'
                         </dl>
                         <input type='submit'>
                     </form>
+                    <?php else:?>
+                        <form action="wall.php?user_id=<?php echo  $userId?>" method="post">
+                        
+                        <input type='submit' name='button'>
                     <?php endif; ?> </p>  
+                    
                 </section>
             </aside>
             <main>
                 <?php
-                /**
+                /** 
                  * Etape 3: récupérer tous les messages de l'utilisatrice
                  */
                 $laQuestionEnSql = "
@@ -121,7 +148,12 @@ require 'connexion.php'
                 {
 
                     //echo "<pre>" . print_r($post, 1) . "</pre>";
-                    ?>                
+                    ?>  
+                    
+                    <p> <?php if ($connectedId == $userId): ?>
+                        bonjour
+                    <?php endif; ?> </p>
+
                     <article>
                         <h3>
                             <time datetime='2020-02-01 11:12:13' ><?php echo $post['created']?></time>
@@ -134,7 +166,8 @@ require 'connexion.php'
                         <footer>
                             <small>♥ <?php echo $post['like_number']?></small>
                             <a href="">#<?php echo $post['taglist']?></a>
-                            
+
+                        
                         </footer>
                     </article>
                 <?php } ?>
