@@ -88,7 +88,7 @@ session_start();
                                 . "NULL);"
                                 ;
                         // echo $lInstructionSql;
-                        // Etape <?php echo $connectedId?> : execution
+                        // Etape 5 : execution
                         $ok = $mysqli->query($lInstructionSql);
                         if ( ! $ok)
                         {
