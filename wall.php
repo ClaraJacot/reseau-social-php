@@ -93,6 +93,26 @@ require 'connexion.php'
                         echo "Vous suivez bien " ,$nameFollowed;
                     } 
                 }
+
+                $enCoursDeTraitement3 = isset($_POST['like']);
+                if($enCoursDeTraitement3) {
+                    $liker1 = $connectedId;
+                    $likedPost1 = $_POST['postId'];
+                    
+                    $lInstructionSql3 = "INSERT INTO likes (id, user_id, post_id)
+                        VALUES (NULL, $liker1, $likedPost1)";
+                        
+                
+                
+                    $ok = $mysqli->query($lInstructionSql3);
+                    if (! $ok)
+                    {
+                        echo "Impossible de liker ce post." . $mysqli->error;                 
+                    } else 
+                    {
+                        echo "Post liké";
+                    } 
+                }
                 ?> </p>
 
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
@@ -124,7 +144,7 @@ require 'connexion.php'
                  * Etape 3: récupérer tous les messages de l'utilisatrice
                  */
                 $laQuestionEnSql = "
-                    SELECT posts.content, posts.created, users.alias as author_name, 
+                    SELECT posts.content, posts.created, posts.id, users.alias as author_name, 
                     COUNT(likes.id) as like_number, GROUP_CONCAT(DISTINCT tags.label) AS taglist 
                     FROM posts
                     JOIN users ON  users.id=posts.user_id
@@ -165,6 +185,11 @@ require 'connexion.php'
                         </div>                                            
                         <footer>
                             <small>♥ <?php echo $post['like_number']?></small>
+                            <form action="wall.php?user_id=<?php echo $connectedId ?>" method ="post">
+                                <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">
+                                <button type='submit' name='like'>Aimer</button>
+                            </form>
+
                             <a href="">#<?php echo $post['taglist']?></a>
 
                         

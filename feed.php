@@ -32,6 +32,7 @@ require 'connexion.php'
             
 
             <aside>
+                <p>
                 <?php
                 /**
                  * Etape 3: récupérer le nom de l'utilisateur
@@ -41,7 +42,7 @@ require 'connexion.php'
                 $user = $lesInformations->fetch_assoc();
                 //@todo: afficher le résultat de la ligne ci dessous, remplacer XXX par l'alias et effacer la ligne ci-dessous
                 //echo "<pre>" . print_r($user, 1) . "</pre>";
-                ?>
+                ?> </p>
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
@@ -60,6 +61,7 @@ require 'connexion.php'
                 $laQuestionEnSql = "
                     SELECT posts.content,
                     posts.created,
+                    posts.id,
                     posts.user_id,
                     users.alias as author_name,  
                     count(likes.id) as like_number,  
@@ -85,7 +87,27 @@ require 'connexion.php'
                  * Etape 4: @todo Parcourir les messsages et remplir correctement le HTML avec les bonnes valeurs php
                  * A vous de retrouver comment faire la boucle while de parcours...
                  */
-                ?>  
+                $enCoursDeTraitement3 = isset($_POST['like']);
+                if($enCoursDeTraitement3) {
+                    $liker1 = $connectedId;
+                    $likedPost1 = $_POST['postId'];
+                    
+                    $lInstructionSql3 = "INSERT INTO likes (id, user_id, post_id)
+                        VALUES (NULL, $liker1, $likedPost1)";
+                        
+                
+                
+                    $ok = $mysqli->query($lInstructionSql3);
+                    if (! $ok)
+                    {
+                        echo "Impossible de liker ce post." . $mysqli->error;                 
+                    } else 
+                    {
+                        echo "Post liké";
+                    } 
+                }
+                ?>
+                
                 
                 
                 <article>
@@ -101,6 +123,10 @@ require 'connexion.php'
                         </div>                                            
                         <footer>
                             <small>♥ <?php echo $post['like_number']?></small>
+                            <form action="feed.php?user_id=<?php echo $connectedId ?>" method ="post">
+                                <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">
+                                <button type='submit' name='like'>Aimer</button>
+                            </form>
                             <a href="">#<?php echo $post['taglist']?></a>
                     </footer>
                 </article>
