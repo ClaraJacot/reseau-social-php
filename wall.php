@@ -30,8 +30,6 @@ require 'connexion.php'
             </nav>
         </header>
         <div id="wrapper">
-           
-            
             
 
             <aside>
@@ -81,13 +79,6 @@ require 'connexion.php'
                     <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <?php echo $user['alias']?>
                         (n° <?php echo $userId ?>)
                     </p>
-<<<<<<< HEAD
-                    <form><?php if($connectedId == $userId)
-                     ?></form>
-                    <?php
-                
-                    ?>
-=======
                     <p><?php if ($connectedId == $userId) :?>
                         <form action="wall.php?user_id=<?php echo  $connectedId?>" method="post">
                         <input type='hidden' name='???' value='achanger'>
@@ -98,7 +89,6 @@ require 'connexion.php'
                         <input type='submit'>
                     </form>
                     <?php endif; ?> </p>  
->>>>>>> 1a461f090c0af83de3c3987c8ab531d23c80f0bd
                 </section>
             </aside>
             <main>
