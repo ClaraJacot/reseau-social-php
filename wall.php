@@ -53,7 +53,7 @@ require 'connexion.php'
             </aside>
             <main>
                 <?php
-                /**
+                /** 
                  * Etape 3: récupérer tous les messages de l'utilisatrice
                  */
                 $laQuestionEnSql = "
@@ -81,7 +81,12 @@ require 'connexion.php'
                 {
 
                     //echo "<pre>" . print_r($post, 1) . "</pre>";
-                    ?>                
+                    ?>  
+                    
+                    <p> <?php if ($connectedId == $userId): ?>
+                        bonjour
+                    <?php endif; ?> </p>
+
                     <article>
                         <h3>
                             <time datetime='2020-02-01 11:12:13' ><?php echo $post['created']?></time>
@@ -94,7 +99,8 @@ require 'connexion.php'
                         <footer>
                             <small>♥ <?php echo $post['like_number']?></small>
                             <a href="">#<?php echo $post['taglist']?></a>
-                            
+
+                        
                         </footer>
                     </article>
                 <?php } ?>
