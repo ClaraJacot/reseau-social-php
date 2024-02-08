@@ -14,7 +14,7 @@ require 'connexion.php'
             <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/></a>
             <nav id="menu">
                 <a href="news.php">Actualités</a>
-                <a href="wall.php?user_id=<?php echo $connectedId?>">Mur</a>
+                <a href=<?php if ($connectedId != 0) {echo "wall.php?user_id=" . $connectedId;} else {echo "login.php" ;} ?>>Mur</a>
                 <a href="feed.php?user_id=<?php echo $connectedId?>">Flux</a>
                 <a href="tags.php?tag_id=1">Mots-clés</a>
             </nav>
@@ -63,7 +63,7 @@ require 'connexion.php'
                     LEFT JOIN likes      ON likes.post_id  = posts.id 
                     GROUP BY posts.id
                     ORDER BY posts.created DESC  
-                    LIMIT 5
+                    LIMIT 6
                     ";
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 // Vérification
