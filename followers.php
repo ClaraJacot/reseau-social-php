@@ -1,5 +1,6 @@
 <?php
-require 'connexion.php'
+require 'connexion.php';
+if($connectedId !=0):
 ?>
 <!doctype html>
 <html lang="fr">
@@ -66,3 +67,7 @@ require 'connexion.php'
         </div>
     </body>
 </html>
+<?php else : ?>
+    <p>Vous n'êtes pas connecté, impossible de charger la page</p>
+    <a href="login.php">Se connecter </a> 
+    <?php endif; ?>

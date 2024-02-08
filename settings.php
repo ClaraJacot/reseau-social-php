@@ -1,5 +1,6 @@
 <?php
-require 'connexion.php'
+require 'connexion.php';
+if($connectedId !=0):
 ?>
 <!doctype html>
 <html lang="fr">
@@ -35,8 +36,14 @@ require 'connexion.php'
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
+                   
                     <p>Sur cette page vous trouverez les informations de l'utilisatrice
                         n° <?php echo $userId ?></p>
+                        <form action="login.php" method ="post">
+                            <input type="hidden" name="connectedid" value="<?php echo $_SESSION['connected_id'] ?>" >
+
+                            <button type='submit' name='deconnexion'>Se déconnecter</button>
+                            </form>
 
                 </section>
             </aside>
@@ -92,3 +99,7 @@ require 'connexion.php'
         </div>
     </body>
 </html>
+<?php else : ?>
+    <p>Vous n'êtes pas connecté, impossible de charger la page</p>
+    <a href="login.php">Se connecter </a> 
+    <?php endif; ?>
