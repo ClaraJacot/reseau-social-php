@@ -55,7 +55,9 @@ require 'connexion.php'
                         $postContent = $_POST['message'];
                         $namePost = $user['alias'];
 
+                        $postContent = $mysqli->real_escape_string($postContent);
 
+                         
                         //Etape 3 : Petite sécurité
                         // pour éviter les injection sql : https://www.w3schools.com/sql/sql_injection.asp
                         //$authorId = intval($mysqli->real_escape_string($authorId));
@@ -180,7 +182,20 @@ require 'connexion.php'
                         </h3>
                         <address><?php echo $post['author_name']?></address>
                         <div>
-                            <p><?php echo $post['content']?></p>
+                            <p><?php
+                            $splittedString = explode("\n", $post['content']);
+                            //echo $splittedString;
+                            foreach($splittedString as $ligne){
+                                echo $ligne;
+                                echo '<br>';
+                            }?></p>
+                            
+                            
+
+                            
+
+                    
+                            
                             
                         </div>                                            
                         <footer>
