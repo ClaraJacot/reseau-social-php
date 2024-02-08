@@ -19,7 +19,7 @@ require 'connexion.php'
                 <a href="tags.php?tag_id=1">Mots-clés</a>
             </nav>
             <nav id="user">
-                <a href="#">Profil</a>
+                <a href=<?php if ($connectedId !=0 ) { echo "#";} else {echo "login.php";} ?>>Profil</a>
                 <ul>
                     <li><a href="settings.php?user_id=<?php echo $connectedId?>">Paramètres</a></li>
                     <li><a href="followers.php?user_id=<?php echo $connectedId?>">Mes suiveurs</a></li>
