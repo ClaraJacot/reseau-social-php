@@ -119,6 +119,7 @@ require 'connexion.php'
                 while ($post = $lesInformations->fetch_assoc())
                 {
 
+                
                     //echo "<pre>" . print_r($post, 1) . "</pre>";
                     ?>                
                     <article>
@@ -129,7 +130,13 @@ require 'connexion.php'
                         <a href="wall.php?user_id=<?php echo $post['user_id'] ?>">Voir son mur</a>                    
 
                         <div>
-                            <p><?php echo $post['content']?></p>
+                            <p><?php
+                            $splittedString = explode("\n", $post['content']);
+                            //echo $splittedString;
+                            foreach($splittedString as $ligne){
+                                echo $ligne;
+                                echo '<br>';
+                            }?></p>
                             
                         </div>                                            
                         <footer>
