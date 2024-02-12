@@ -60,16 +60,7 @@ require 'connexion.php'
 
                         $postContent = $mysqli->real_escape_string($postContent);
 
-                        $hashtagSql = "SELECT label FROM tags";
-                            $taglist = $mysqli->query($hashtagSql);
-                        
-                            while ($tag = $taglist->fetch_assoc()){
-                                //print_r($tag);
-                                //echo $tag['label'];
-                                if (preg_match('/'.$tag['label'].'/', $postContent)){
-                                echo "Ok";
-                            }
-                        }
+                      
 
 
                         //Etape 3 : Petite sécurité
@@ -89,10 +80,32 @@ require 'connexion.php'
                         } else
                         {
                             echo "Message posté en tant que " , $namePost;
-                        } 
+                        }
+
+                        $hashtagSql = "SELECT * FROM tags";
+                        $taglist = $mysqli->query($hashtagSql);
+
+                        while ($tag = $taglist->fetch_assoc()){
+                            if (preg_match('/'.$tag['label'].'/', $postContent)){
+                                $tagId = $tag['id'];
+                                $uneQuestion = "SELECT id FROM posts ORDER BY posts.id DESC LIMIT 1";
+                                $dernierPost = $mysqli->query($uneQuestion);
+                                $ledernierPost = $dernierPost->fetch_assoc();
+                                $leVraiId = $ledernierPost['id'];
+
+                                $newHashtag = "INSERT INTO posts_tags(post_id,tag_id)
+                                    VALUES($leVraiId,$tagId)";
+                                    
+
+                                $ok = $mysqli->query($newHashtag);
+                                if (! $ok){
+                                    echo "Impossible d'ajouter un tag" . $mysqli->error;
+                                } else {
+                                    echo "Tag enregistré";
+                                }
+                            }
+                        }
                     }
-                    
-                   
 
                 $enCoursDeTraitement2 = isset($_POST['button']);
                 if($enCoursDeTraitement2) {
@@ -142,7 +155,7 @@ require 'connexion.php'
                     </p>
                     <p><?php if ($connectedId == $userId) :?>
                         <form action="wall.php?user_id=<?php echo  $connectedId?>" method="post">
-                        <input type='hidden' name='???' value='achanger'>
+                        <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">
                         <dl>
                         <dt><label for='message'>Post</label></dt>
                         <dd><textarea name='message'></textarea></dd>
@@ -218,6 +231,7 @@ require 'connexion.php'
                             </form>
 
                             <a href="">#<?php echo $post['taglist']?></a>
+
 
                         
                         </footer>
