@@ -69,7 +69,7 @@ require 'connexion.php'
                                 if (preg_match('/'.$tag['label'].'/', $postContent)){
                                 echo "Ok";
                             }
-                        }
+                        } 
 
 
                         //Etape 3 : Petite sécurité
@@ -89,7 +89,8 @@ require 'connexion.php'
                         } else
                         {
                             echo "Message posté en tant que " , $namePost;
-                        } 
+                        }
+                    
                     }
                     
                    
