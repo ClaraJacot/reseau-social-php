@@ -57,7 +57,21 @@ require 'connexion.php'
 
                         $postContent = $mysqli->real_escape_string($postContent);
 
-                         
+                        $hashtagSql = "SELECT  tags.label FROM tags";
+                        $ok = $mysqli->query($hashtagSql);
+                        if (ok){
+                            echo $hashtagSql;
+                        }
+
+                        while($tag = $hashtagSql->fetch_assoc()){
+                            (preg_match_all('/'.$tag["tags"].'/',"$postContent"))
+                            echo "Ok";
+                        } 
+                            
+                          
+                        
+                        
+                    
                         //Etape 3 : Petite sécurité
                         // pour éviter les injection sql : https://www.w3schools.com/sql/sql_injection.asp
                         //$authorId = intval($mysqli->real_escape_string($authorId));
@@ -76,6 +90,8 @@ require 'connexion.php'
                             echo "Message posté en tant que " , $namePost;
                         }
                     }
+
+            
                 
                 $enCoursDeTraitement2 = isset($_POST['button']);
                 if($enCoursDeTraitement2) {
@@ -189,14 +205,9 @@ require 'connexion.php'
                                 echo $ligne;
                                 echo '<br>';
                             }?></p>
-                            
-                            
 
-                            
+                        
 
-                    
-                            
-                            
                         </div>                                            
                         <footer>
                             <small>♥ <?php echo $post['like_number']?></small>
