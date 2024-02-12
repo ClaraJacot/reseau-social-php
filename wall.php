@@ -87,27 +87,43 @@ require 'connexion.php'
                         
 
                         while ($tag = $taglist->fetch_assoc()){
-                            if (preg_match('/'.$tag['label'].'/', $postContent)){
+                            $hashtag = "#". $tag['label'];
+                            if (preg_match('/'.$hashtag.'/', $postContent)){
                                 $tagId = $tag['id'];
                                 $uneQuestion = "SELECT id FROM posts ORDER BY posts.id DESC LIMIT 1";
                                 $dernierPost = $mysqli->query($uneQuestion);
                                 $ledernierPost = $dernierPost->fetch_assoc();
                                 $leVraiId = $ledernierPost['id'];
-
                                 $newHashtag = "INSERT INTO posts_tags(post_id,tag_id)
                                     VALUES($leVraiId,$tagId)";
-                                    
-
                                 $ok = $mysqli->query($newHashtag);
                                 if (! $ok){
                                     echo "Impossible d'ajouter un tag" . $mysqli->error;
                                 } else {
                                     echo "Tag enregistré";
                                 }
-                            }
-                        }
-                    }
+                            } 
 
+
+                        } if (str_contains($postContent,'#')){
+                                $splittedPost = explode(" ",$postContent);
+                                foreach($splittedPost as $word){
+                                    if (str_contains($word,'#')){
+                                    $result = explode('#', $word);
+                                    $nouveauHashtag = $result[1];
+                                    $hashtagInsert = "INSERT INTO tags (label)
+                                        VALUES ('$nouveauHashtag')";
+                                    
+                                    $ok = $mysqli->query($hashtagInsert);
+                                        if (! $ok){
+                                            echo "Impossible d'ajouter un nouvel hashtag" . $mysqli->error;
+                                        }else{
+                                            echo "Nouveau tag enregistré";
+                                        }
+                                    }
+                                }
+                            }   
+                }
                 $enCoursDeTraitement2 = isset($_POST['button']);
                 if($enCoursDeTraitement2) {
                     $followed = $userId;
