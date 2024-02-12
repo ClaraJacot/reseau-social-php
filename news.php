@@ -48,6 +48,25 @@ require 'connexion.php'
                 // cette requete vous est donnée, elle est complexe mais correcte, 
                 // si vous ne la comprenez pas c'est normal, passez, on y reviendra
                 <?php 
+                    $enCoursDeTraitement3 = isset($_POST['like']);
+                    if($enCoursDeTraitement3) {
+                        $liker1 = $connectedId;
+                        $likedPost1 = $_POST['postId'];
+                        
+                        $lInstructionSql3 = "INSERT INTO likes (id, user_id, post_id)
+                            VALUES (NULL, $liker1, $likedPost1)";
+                            
+                    
+                    
+                        $ok = $mysqli->query($lInstructionSql3);
+                        if (! $ok)
+                        {
+                            echo "Impossible de liker ce post." . $mysqli->error;                 
+                        } else 
+                        {
+                            echo "Post liké";
+                        } 
+                    }
                 $laQuestionEnSql = "
                     SELECT posts.content,
                     posts.created,
@@ -89,25 +108,7 @@ require 'connexion.php'
                     // 
                     
                     // avec le ? > ci-dessous on sort du mode php et on écrit du html comme on veut... mais en restant dans la boucle
-                    $enCoursDeTraitement3 = isset($_POST['like']);
-                if($enCoursDeTraitement3) {
-                    $liker1 = $connectedId;
-                    $likedPost1 = $_POST['postId'];
-                    
-                    $lInstructionSql3 = "INSERT INTO likes (id, user_id, post_id)
-                        VALUES (NULL, $liker1, $likedPost1)";
-                        
                 
-                
-                    $ok = $mysqli->query($lInstructionSql3);
-                    if (! $ok)
-                    {
-                        echo "Impossible de liker ce post." . $mysqli->error;                 
-                    } else 
-                    {
-                        echo "Post liké";
-                    } 
-                }
                     ?>
                     <article>
                         <h3>

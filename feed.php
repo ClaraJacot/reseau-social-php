@@ -37,6 +37,25 @@ if ($connectedId !=0 ):
             <aside>
                 <p>
                 <?php
+                $enCoursDeTraitement3 = isset($_POST['like']);
+                if($enCoursDeTraitement3) {
+                    $liker1 = $connectedId;
+                    $likedPost1 = $_POST['postId'];
+                    
+                    $lInstructionSql3 = "INSERT INTO likes (id, user_id, post_id)
+                        VALUES (NULL, $liker1, $likedPost1)";
+                        
+                
+                
+                    $ok = $mysqli->query($lInstructionSql3);
+                    if (! $ok)
+                    {
+                        echo "Impossible de liker ce post." . $mysqli->error;                 
+                    } else 
+                    {
+                        echo "Post liké";
+                    } 
+                }
                 /**
                  * Etape 3: récupérer le nom de l'utilisateur
                  */
@@ -90,25 +109,7 @@ if ($connectedId !=0 ):
                  * Etape 4: @todo Parcourir les messsages et remplir correctement le HTML avec les bonnes valeurs php
                  * A vous de retrouver comment faire la boucle while de parcours...
                  */
-                $enCoursDeTraitement3 = isset($_POST['like']);
-                if($enCoursDeTraitement3) {
-                    $liker1 = $connectedId;
-                    $likedPost1 = $_POST['postId'];
-                    
-                    $lInstructionSql3 = "INSERT INTO likes (id, user_id, post_id)
-                        VALUES (NULL, $liker1, $likedPost1)";
-                        
                 
-                
-                    $ok = $mysqli->query($lInstructionSql3);
-                    if (! $ok)
-                    {
-                        echo "Impossible de liker ce post." . $mysqli->error;                 
-                    } else 
-                    {
-                        echo "Post liké";
-                    } 
-                }
                 ?>
                 
                 
