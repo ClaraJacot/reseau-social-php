@@ -56,7 +56,9 @@ require 'connexion.php'
                         $namePost = $user['alias'];
 
                         $postContent = $mysqli->real_escape_string($postContent);
-
+                        if(preg_match("/#toto/","$postContent")){
+                            echo "vous aimez toto";
+                        }
                          
                         //Etape 3 : Petite sécurité
                         // pour éviter les injection sql : https://www.w3schools.com/sql/sql_injection.asp
@@ -190,12 +192,7 @@ require 'connexion.php'
                                 echo '<br>';
                             }?></p>
                             
-                            
-
-                            
-
-                    
-                            
+                         
                             
                         </div>                                            
                         <footer>
