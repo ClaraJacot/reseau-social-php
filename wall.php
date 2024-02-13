@@ -35,9 +35,6 @@ require 'connexion.php'
             <aside>
                 <p>
                 <?php
-
-                 
-
                 /**
                  * Etape 3: récupérer le nom de l'utilisateur
                  */                
@@ -59,9 +56,6 @@ require 'connexion.php'
                         $namePost = $user['alias'];
 
                         $postContent = $mysqli->real_escape_string($postContent);
-
-                      
-
 
                         //Etape 3 : Petite sécurité
                         // pour éviter les injection sql : https://www.w3schools.com/sql/sql_injection.asp
@@ -103,9 +97,8 @@ require 'connexion.php'
                                     echo "Tag enregistré";
                                 }
                             } 
-
-                        } 
-                        if (str_contains($postContent,'#')){
+                            }
+                            if (str_contains($postContent,'#')){
                                 $uneQuestion = "SELECT id FROM posts ORDER BY posts.id DESC LIMIT 1";
                                 $dernierPost = $mysqli->query($uneQuestion);
                                 $ledernierPost = $dernierPost->fetch_assoc();
@@ -116,8 +109,7 @@ require 'connexion.php'
                                     $result = explode('#', $word);
                                     $nouveauHashtag = $result[1];
                                     $hashtagInsert = "INSERT INTO tags (label)
-                                        VALUES ('$nouveauHashtag')";    
-                                    //echo $hashtagInsert;
+                                        VALUES ('$nouveauHashtag')";
                                     $ok = $mysqli->query($hashtagInsert);
                                         if (! $ok){
                                             echo "Impossible d'ajouter un nouvel hashtag" . $mysqli->error;
@@ -136,9 +128,10 @@ require 'connexion.php'
                                     }else{
                                         echo "Nouveau post_tag enregistré";
                                     }
-                                    }
                                 }
-                            }   
+                            }
+                        }
+                
                 }
                 $enCoursDeTraitement2 = isset($_POST['button']);
                 if($enCoursDeTraitement2) {
@@ -167,8 +160,6 @@ require 'connexion.php'
                     $lInstructionSql3 = "INSERT INTO likes (id, user_id, post_id)
                         VALUES (NULL, $liker1, $likedPost1)";
                         
-                
-                
                     $ok = $mysqli->query($lInstructionSql3);
                     if (! $ok)
                     {
