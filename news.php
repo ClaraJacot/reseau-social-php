@@ -133,6 +133,7 @@ require 'connexion.php'
                                 <button type='submit' name='like'>Aimer</button>
                             </form>
                             <a href="">#<?php echo $post['taglist']?></a>,
+                            
                         </footer>
                     </article>
                     <?php
