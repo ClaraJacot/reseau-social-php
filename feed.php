@@ -87,7 +87,8 @@ if ($connectedId !=0 ):
                     posts.user_id,
                     users.alias as author_name,  
                     count(likes.id) as like_number,  
-                    GROUP_CONCAT(DISTINCT tags.label) AS taglist 
+                    GROUP_CONCAT(DISTINCT tags.label) AS taglist,
+                    GROUP_CONCAT(DISTINCT tags.id ORDER BY tags.label) AS tagid
                     FROM followers 
                     JOIN users ON users.id=followers.followed_user_id
                     JOIN posts ON posts.user_id=users.id
@@ -137,7 +138,19 @@ if ($connectedId !=0 ):
                                 <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">
                                 <button type='submit' name='like'>Aimer</button>
                             </form>
-                            <a href="">#<?php echo $post['taglist']?></a>
+                            <?php
+                                $splittedTag = explode(",", $post['taglist']);
+                                $splittedId = explode(",", $post['tagid']);
+                        //    echo $post['taglist'];
+                        //    echo $post['tagid'];
+                        //    print_r($splittedTag);
+                        //    print_r($splittedId);
+                                for ($i = 0 ; $i<count($splittedId); $i ++ ):?>
+                                    <a href ="tags.php?tag_id=<?php
+                                    echo $splittedId[$i];
+                                ?>">#<?php echo $splittedTag[$i] ?></a>;
+                                <?php endfor;
+                            ?>
                     </footer>
                 </article>
                 <?php

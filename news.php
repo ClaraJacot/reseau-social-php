@@ -76,7 +76,7 @@ require 'connexion.php'
                     posts.user_id, 
                     count(likes.id) as like_number,  
                     GROUP_CONCAT(DISTINCT tags.label) AS taglist,
-                    GROUP_CONCAT(DISTINCT tags.id ORDER BY tags.label) AS tagid 
+                    GROUP_CONCAT(DISTINCT tags.id ORDER BY tags.label) AS tagid                    
                     FROM posts
                     JOIN users ON  users.id=posts.user_id
                     LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
@@ -86,6 +86,9 @@ require 'connexion.php'
                     ORDER BY posts.created DESC  
                     LIMIT 6
                     ";
+
+               
+
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 // Vérification
                 if ( ! $lesInformations)
@@ -110,7 +113,9 @@ require 'connexion.php'
                     // 
                     
                     // avec le ? > ci-dessous on sort du mode php et on écrit du html comme on veut... mais en restant dans la boucle
-                
+                    // $hashtag = "SELECT tags.id FROM tags";
+                    // $reponse = $mysqli->query($hashtag);
+                    // $tag = $reponse->fetch_assoc();
                     ?>
                     <article>
                         <h3>
@@ -134,25 +139,25 @@ require 'connexion.php'
                                 <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">
                                 <button type='submit' name='like'>Aimer</button>
                             </form>
-                            <?php 
-                            $splittedTag = explode(",", $post['taglist']);
-                            $splittedId = explode(",", $post['tagid']);
-                            echo $post['taglist'];
-                            echo $post['tagid'];
-                            print_r($splittedTag);
-                            print_r($splittedId);
-                            for ($i = 0 ; $i<count($splittedId); $i ++ ):?>
-                                <a href ="tags.php?tag_id=<?php 
-                                //foreach ($splittedId as $id) { 
+
+                            <?php
+                                $splittedTag = explode(",", $post['taglist']);
+                                $splittedId = explode(",", $post['tagid']);
+                        //    echo $post['taglist'];
+                        //    echo $post['tagid'];
+                        //    print_r($splittedTag);
+                        //    print_r($splittedId);
+                                for ($i = 0 ; $i<count($splittedId); $i ++ ):?>
+                                    <a href ="tags.php?tag_id=<?php
                                     echo $splittedId[$i];
-                                 //}
-                                 ?>">#<?php echo $splittedTag[$i] ?></a>;
-                            <?php endfor;
+                                ?>">#<?php echo $splittedTag[$i] ?></a>;
+                                <?php endfor;
                             ?>
+                    
                         </footer>
                     </article>
                     <?php
-                    // avec le <?php ci-dessus on retourne en mode php 
+                    //avec le <?php ci-dessus on retourne en mode php 
                 }// cette accolade ferme et termine la boucle while ouverte avant.
                 ?>
 
