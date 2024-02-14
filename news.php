@@ -67,7 +67,41 @@ require 'connexion.php'
                             echo "Post liké";
                         } 
                     }
-                    
+                    $enCoursDeTraitement4 = isset($_POST['dislike']);
+                if($enCoursDeTraitement4) {
+                    $liker = $connectedId;
+                    $likedPost = $_POST['postId'];
+
+                    $deleteSql = " DELETE FROM likes WHERE user_id = $liker AND post_id = $likedPost";
+                    $ok = $mysqli->query($deleteSql);
+                    if (! $ok)
+                    {
+                        echo "Impossible de dé-liker ce post." . $mysqli->error;                 
+                    } else 
+                    {
+                        echo "Post dé-liké";
+                    } 
+
+                }
+                $ecoutePostReponse = isset($_POST['answer']);
+                if ($ecoutePostReponse)  {
+                    $parentId = $_POST['postId'];
+                    $postContent = $_POST['reponse'];
+                    $ordreSql = "INSERT INTO posts (user_id, content, created, parent_id)
+                    VALUES ($connectedId, '$postContent', NOW(),$parentId)";
+
+                    $ok = $mysqli->query($ordreSql);
+                    if (!$ok)
+                    {
+                        echo "Impossible de répondre" . $mysqli->error;
+                    } else 
+                    {
+                        echo "réponse envoyée!";
+                    }
+                    require 'hashtag.php';
+                }
+
+
                 $laQuestionEnSql = "
                     SELECT posts.content,
                     posts.created,
@@ -139,7 +173,10 @@ require 'connexion.php'
                                 <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">
                                 <button type='submit' name='like'>Aimer</button>
                             </form>
-
+                            <form action="wall.php?user_id=<?php echo $connectedId ?>" method ="post">
+                                <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">
+                                <button type='submit' name='dislike'>Ne plus aimer</button>
+                            </form>
                             <?php
                                 $splittedTag = explode(",", $post['taglist']);
                                 $splittedId = explode(",", $post['tagid']);
@@ -153,7 +190,11 @@ require 'connexion.php'
                                 ?>">#<?php echo $splittedTag[$i] ?></a>;
                                 <?php endfor;
                             ?>
-                    
+                            <form action="news.php?user_id=<?php echo $connectedId ?>" method ="post">
+                                <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">  
+                                <textarea name='reponse'></textarea>
+                                <button type='submit' name='answer'>Répondre</button>
+                            </form>
                         </footer>
                     </article>
                     <?php

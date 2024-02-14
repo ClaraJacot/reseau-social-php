@@ -76,61 +76,7 @@ require 'connexion.php'
                             echo "Message posté en tant que " , $namePost;
                         }
 
-                        $hashtagSql = "SELECT * FROM tags";
-                        $taglist = $mysqli->query($hashtagSql);
-                        
-
-                        while ($tag = $taglist->fetch_assoc()){
-                            $hashtag = "#". $tag['label'];
-                            if (preg_match('/'.$hashtag.'/', $postContent)){
-                                $tagId = $tag['id'];
-                                $uneQuestion = "SELECT id FROM posts ORDER BY posts.id DESC LIMIT 1";
-                                $dernierPost = $mysqli->query($uneQuestion);
-                                $ledernierPost = $dernierPost->fetch_assoc();
-                                $leVraiId = $ledernierPost['id'];
-                                $newHashtag = "INSERT INTO posts_tags(post_id,tag_id)
-                                    VALUES($leVraiId,$tagId)";
-                                $ok = $mysqli->query($newHashtag);
-                                if (! $ok){
-                                    echo "Impossible d'ajouter un tag" . $mysqli->error;
-                                } else {
-                                    echo "Tag enregistré";
-                                }
-                            } 
-                            }
-                            if (str_contains($postContent,'#')){
-                                $uneQuestion = "SELECT id FROM posts ORDER BY posts.id DESC LIMIT 1";
-                                $dernierPost = $mysqli->query($uneQuestion);
-                                $ledernierPost = $dernierPost->fetch_assoc();
-                                $leVraiId = $ledernierPost['id'];
-                                $splittedPost = explode(" ",$postContent);
-                                foreach($splittedPost as $word){
-                                    if (str_contains($word,'#')){
-                                    $result = explode('#', $word);
-                                    $nouveauHashtag = $result[1];
-                                    $hashtagInsert = "INSERT INTO tags (label)
-                                        VALUES ('$nouveauHashtag')";
-                                    $ok = $mysqli->query($hashtagInsert);
-                                        if (! $ok){
-                                            echo "Impossible d'ajouter un nouvel hashtag" . $mysqli->error;
-                                        }else{
-                                            echo "Nouveau tag enregistré";
-                                        }
-                                    $question2 = "SELECT id FROM tags ORDER BY tags.id DESC LIMIT 1";
-                                    $reponse = $mysqli->query($question2);
-                                    $lederniertag = $reponse->fetch_assoc();
-                                    $levraitag = $lederniertag['id'];
-                                    $posttagsinsert = "INSERT INTO posts_tags (post_id, tag_id)
-                                        VALUES ($leVraiId, $levraitag)";
-                                    $ok2 = $mysqli->query($posttagsinsert);
-                                    if (! $ok2){
-                                        echo "Impossible d'ajouter à posts_tags" . $mysqli->error;
-                                    }else{
-                                        echo "Nouveau post_tag enregistré";
-                                    }
-                                }
-                            }
-                        }
+                        require 'hashtag.php';
                 
                 }
                 $enCoursDeTraitement2 = isset($_POST['button']);
@@ -154,6 +100,7 @@ require 'connexion.php'
 
                 $enCoursDeTraitement3 = isset($_POST['like']);
                 if($enCoursDeTraitement3) {
+                    //var_dump($_POST['like']); die;
                     $liker1 = $connectedId;
                     $likedPost1 = $_POST['postId'];
                     
@@ -169,11 +116,30 @@ require 'connexion.php'
                         echo "Post liké";
                     } 
                 }
+                $enCoursDeTraitement4 = isset($_POST['dislike']);
+                if($enCoursDeTraitement4) {
+                    $liker = $connectedId;
+                    $likedPost = $_POST['postId'];
+
+                    $deleteSql = " DELETE FROM likes WHERE user_id = $liker AND post_id = $likedPost";
+                    $ok = $mysqli->query($deleteSql);
+                    if (! $ok)
+                    {
+                        echo "Impossible de dé-liker ce post." . $mysqli->error;                 
+                    } else 
+                    {
+                        echo "Post dé-liké";
+                    } 
+
+                }
                 ?> </p>
 
-                <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+                <img src="user<?php echo $userId ?>.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
+                    <?php if ($connectedId == $userId): ?>
+                       <p> Bonjour <?php echo $user['alias'] ?> </p>
+                    <?php endif; ?> 
                     <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <?php echo $user['alias']?>
                         (n° <?php echo $userId ?>)
                     </p>
@@ -227,9 +193,7 @@ require 'connexion.php'
                     //echo "<pre>" . print_r($post, 1) . "</pre>";
                     ?>  
                     
-                    <p> <?php if ($connectedId == $userId): ?>
-                        bonjour
-                    <?php endif; ?> </p>
+                    
 
                     <article>
                         <h3>
@@ -254,7 +218,12 @@ require 'connexion.php'
                                 <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">
                                 <button type='submit' name='like'>Aimer</button>
                             </form>
-                            <?php
+                            <form action="wall.php?user_id=<?php echo $connectedId ?>" method ="post">
+                                <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">
+                                <button type='submit' name='dislike'>Ne plus aimer</button>
+                            </form>
+                            <p>
+                                <?php
                                 $splittedTag = explode(",", $post['taglist']);
                                 $splittedId = explode(",", $post['tagid']);
                         //    echo $post['taglist'];
@@ -266,7 +235,8 @@ require 'connexion.php'
                                     echo $splittedId[$i];
                                 ?>">#<?php echo $splittedTag[$i] ?></a>;
                                 <?php endfor;
-                            ?>       
+                            ?> 
+                            </p>      
                         </footer>
                     </article>
                 <?php } ?>
