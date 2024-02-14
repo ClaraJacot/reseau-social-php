@@ -1,6 +1,7 @@
 body{
-    background-color: #003;
-    font-family: Arial;
+    background-color: #d9d0de;
+    font-family:Verdana;
+    font-style: bold;
 }
 
 a{text-decoration: none; color:black;}
@@ -12,10 +13,13 @@ body>header{
     width:80em;
     margin:0 auto 2em auto;    
     padding:0;
-
+    border-radius: 15px 15px 15px 15px;
 }
+
 body>header img{
     height:5em;
+    background: #cfd8d7;
+    border-radius: 15px 0px 0px 15px;
 }
 body>header #menu {
     display:flex;
@@ -57,7 +61,7 @@ body>header #user ul{
 
     z-index: 1;
 }
-body>header #user ul li a{
+body>header #user ul li {
     display:block;
     width:10em;
     padding:1em;
@@ -76,7 +80,9 @@ body>header #user:hover ul{
 #wrapper aside{
     background-color: #fff;
     flex:1;
-    padding:1em;
+    text-align: center;
+    margin-bottom: 50em;
+    padding:3em 3em 3em 3em;
     border-radius: 1em;    
 }
 #wrapper aside img{
@@ -105,35 +111,42 @@ body>header #user:hover ul{
 
 }
 #wrapper main article time{
-    float:left;
+    float:right;
+    font-size: 12px;
 }
 #wrapper main article address{
-    text-align: right;
+    text-align: left;
     margin-bottom: 1em;
 }
 #wrapper main article p{
-    margin:0;
+    margin:10;
 }
 #wrapper main article footer{
     margin-top: 1em;
-    text-align: right;
+    text-align: left;
+    font-size:12px;
 }
 #wrapper main article footer small{
-    float:left;
+    float:right;
+    font-size: 15px;
+    text-align: right;
+}
+#wrapper main article button {
+    text-align: right;
 }
 
 #wrapper.admin{flex-direction: row-reverse}
-#wrapper.admin aside{flex:1;margin-left:1em;border-radius:0;padding:0;}
-#wrapper.admin main{flex:2;background-color: #fff;border-radius: 0;padding:0;}
+#wrapper.admin aside{flex:1;background-color: #d9d0de; margin-left:1em;border-radius:0;padding:0;}
+#wrapper.admin main{flex:2;background-color:#d9d0de;border-radius: 0;padding:0;}
 #wrapper.admin h2{text-align: center;}
 #wrapper.admin h3{margin:0;}
 #wrapper.admin nav{text-align: right;}
-#wrapper.admin article{border:1px solid #ddd;border-radius: 1em;padding:1em;margin:1em;}
+#wrapper.admin article{background-color: #fff;border:1px solid #d9d0de;border-radius: 1em;padding:1em;margin:1em;}
 #wrapper.admin article p{float:left;margin:0;}
 
 
 .parameters dl dt{float:left;font-weight: bold;line-height: 1.5em;}
-.parameters dl dd{margin-left:15em;line-height: 1.5em;}
+.parameters dl dd{margin-left:20em;line-height: 1.5em;}
 
 .contacts {
     display:flex;
