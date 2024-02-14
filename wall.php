@@ -12,7 +12,7 @@ require 'connexion.php'
     </head>
     <body>
         <header>
-        <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/>
+        <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/> </a>
             <nav id="menu">
                 <a href="news.php">Actualités</a>
                 <a href=<?php if ($connectedId != 0) {echo "wall.php?user_id=" . $connectedId;} else {echo "login.php" ;} ?>>Mur</a>
@@ -173,6 +173,9 @@ require 'connexion.php'
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
+                    <?php if ($connectedId == $userId): ?>
+                    <p> Bonjour <?php echo $user['alias'] ?> </p>
+                    <?php endif; ?>
                     <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <?php echo $user['alias']?>
                         (n° <?php echo $userId ?>)
                     </p>
@@ -225,11 +228,6 @@ require 'connexion.php'
 
                     //echo "<pre>" . print_r($post, 1) . "</pre>";
                     ?>  
-                    
-                    <p> <?php if ($connectedId == $userId): ?>
-                        bonjour
-                    <?php endif; ?> </p>
-
                     <article>
                         <h3>
                             <time datetime='2020-02-01 11:12:13' ><?php echo $post['created']?></time>

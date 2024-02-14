@@ -11,7 +11,7 @@ require 'connexion.php'
     </head>
     <body>
         <header>
-        <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/>
+        <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/> </a>
             <nav id="menu">
                 <a href="news.php">Actualités</a>
                 <a href=<?php if ($connectedId != 0) {echo "wall.php?user_id=" . $connectedId;} else {echo "login.php" ;} ?>>Mur</a>
