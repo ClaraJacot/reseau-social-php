@@ -73,7 +73,6 @@ session_start();
                                 . "'', "
                                 . "NULL);"
                                 ;
-                        // echo $lInstructionSql;
                         
                         $ok = $mysqli->query($lInstructionSql);
                         if ( ! $ok)

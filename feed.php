@@ -119,7 +119,6 @@ if ($connectedId !=0 ):
                         <div>
                             <p><?php
                             $splittedString = explode("\n", $post['content']);
-                            //echo $splittedString;
                             foreach($splittedString as $ligne){
                                 echo $ligne;
                                 echo '<br>';
@@ -135,10 +134,7 @@ if ($connectedId !=0 ):
                             <?php
                                 $splittedTag = explode(",", $post['taglist']);
                                 $splittedId = explode(",", $post['tagid']);
-                        //    echo $post['taglist'];
-                        //    echo $post['tagid'];
-                        //    print_r($splittedTag);
-                        //    print_r($splittedId);
+                        
                                 for ($i = 0 ; $i<count($splittedId); $i ++ ):?>
                                     <a href ="tags.php?tag_id=<?php
                                     echo $splittedId[$i];
@@ -148,7 +144,7 @@ if ($connectedId !=0 ):
                     </footer>
                 </article>
                 <?php
-                }// et de pas oublier de fermer ici vote while
+                }
                 ?>
 
 

@@ -42,7 +42,6 @@ require 'connexion.php'
                 $laQuestionEnSql = "SELECT * FROM tags WHERE id='$tagId'";
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 $tag = $lesInformations->fetch_assoc();
-                //echo "<pre>" . print_r($tag, 1) . "</pre>";
                 
                 
                 $enCoursDeTraitement3 = isset($_POST['like']);
@@ -107,7 +106,6 @@ require 'connexion.php'
                 {
 
                 
-                    //echo "<pre>" . print_r($post, 1) . "</pre>";
                     ?>                
                     <article>
                         <h3>
@@ -119,7 +117,6 @@ require 'connexion.php'
                         <div>
                             <p><?php
                             $splittedString = explode("\n", $post['content']);
-                            //echo $splittedString;
                             foreach($splittedString as $ligne){
                                 echo $ligne;
                                 echo '<br>';
@@ -135,10 +132,7 @@ require 'connexion.php'
                             <?php
                                 $splittedTag = explode(",", $post['taglist']);
                                 $splittedId = explode(",", $post['tagid']);
-                        //    echo $post['taglist'];
-                        //    echo $post['tagid'];
-                        //    print_r($splittedTag);
-                        //    print_r($splittedId);
+                        
                                 for ($i = 0 ; $i<count($splittedId); $i ++ ):?>
                                     <a href ="tags.php?tag_id=<?php
                                     echo $splittedId[$i];

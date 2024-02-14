@@ -93,9 +93,7 @@ require 'connexion.php'
                 {
                     
                     
-                    // $hashtag = "SELECT tags.id FROM tags";
-                    // $reponse = $mysqli->query($hashtag);
-                    // $tag = $reponse->fetch_assoc();
+                   
                     ?>
                     <article>
                         <h3>
@@ -107,7 +105,6 @@ require 'connexion.php'
                         <div>
                             <p><?php
                             $splittedString = explode("\n", $post['content']);
-                            //echo $splittedString;
                             foreach($splittedString as $ligne){
                                 echo $ligne;
                                 echo '<br>';
@@ -124,10 +121,7 @@ require 'connexion.php'
                             <?php
                                 $splittedTag = explode(",", $post['taglist']);
                                 $splittedId = explode(",", $post['tagid']);
-                        //    echo $post['taglist'];
-                        //    echo $post['tagid'];
-                        //    print_r($splittedTag);
-                        //    print_r($splittedId);
+                        
                                 for ($i = 0 ; $i<count($splittedId); $i ++ ):?>
                                     <a href ="tags.php?tag_id=<?php
                                     echo $splittedId[$i];
@@ -138,8 +132,7 @@ require 'connexion.php'
                         </footer>
                     </article>
                     <?php
-                    //avec le <?php ci-dessus on retourne en mode php 
-                }// cette accolade ferme et termine la boucle while ouverte avant.
+                }
                 ?>
 
             </main>
