@@ -14,7 +14,7 @@ if ($connectedId !=0 ):
     </head>
     <body>
         <header>
-        <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/>
+        <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/> </a>
             <nav id="menu">
                 <a href="news.php">Actualités</a>
                 <a href="wall.php?user_id=<?php echo $connectedId?>">Mur</a>
@@ -148,7 +148,7 @@ if ($connectedId !=0 ):
                                 for ($i = 0 ; $i<count($splittedId); $i ++ ):?>
                                     <a href ="tags.php?tag_id=<?php
                                     echo $splittedId[$i];
-                                ?>">#<?php echo $splittedTag[$i] ?></a>;
+                                ?>">#<?php echo $splittedTag[$i] ?></a> 
                                 <?php endfor;
                             ?>
                     </footer>

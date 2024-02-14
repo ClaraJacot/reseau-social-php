@@ -177,6 +177,7 @@ require 'connexion.php'
                                 <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">
                                 <button type='submit' name='dislike'>Ne plus aimer</button>
                             </form>
+                            <br>
                             <?php
                                 $splittedTag = explode(",", $post['taglist']);
                                 $splittedId = explode(",", $post['tagid']);
@@ -187,9 +188,10 @@ require 'connexion.php'
                                 for ($i = 0 ; $i<count($splittedId); $i ++ ):?>
                                     <a href ="tags.php?tag_id=<?php
                                     echo $splittedId[$i];
-                                ?>">#<?php echo $splittedTag[$i] ?></a>;
+                                ?>">#<?php echo $splittedTag[$i] ?></a> 
                                 <?php endfor;
                             ?>
+                            <br>
                             <form action="news.php?user_id=<?php echo $connectedId ?>" method ="post">
                                 <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">  
                                 <textarea name='reponse'></textarea>

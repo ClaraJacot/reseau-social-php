@@ -14,7 +14,7 @@ if ($connectedId !=0):
     </head>
     <body>
         <header>
-            <img src="resoc.jpg" alt="Logo de notre réseau social"/>
+        <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/> </a>
             <nav id="menu">
                 <a href="news.php">Actualités</a>
                 <a href="wall.php?user_id=<?php echo $connectedId?>">Mur</a>
@@ -33,7 +33,7 @@ if ($connectedId !=0):
         </header>
         <div id="wrapper">
             <aside>
-                <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+                <img src="user<?php echo $userId ?>.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez la liste des personnes dont
@@ -62,11 +62,11 @@ if ($connectedId !=0):
                 while ($user = $lesInformations->fetch_assoc()){
                 ?>
                 <article>
-                    <img src="user.jpg" alt="blason"/>
+                    <img src="user<?php echo $user['id'] ?>.jpg" alt="blason"/>
                     <h3><?php echo $user['alias']?></h3>
                     <a href="wall.php?user_id=<?php echo $user['id'] ?>">Voir son mur</a>                    
 
-                    <p><?php echo $user['id']?></p>                    
+                                        
                 </article>
                 <?php } ?>
             </main>
