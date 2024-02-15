@@ -5,7 +5,7 @@ require 'connexion.php'
 <html lang="fr">
     <head>
         <meta charset="utf-8">
-        <title>ReSoC - Les message par mot-clé</title> 
+        <title>ReSoC - Les messages par mot-clé</title> 
         <meta name="author" content="Julien Falconnet">
         <link rel="stylesheet" href="style.css"/>
     </head>
@@ -30,13 +30,7 @@ require 'connexion.php'
         </header>
         <div id="wrapper">
             <?php
-            /**
-             * Cette page est similaire à wall.php ou feed.php 
-             * mais elle porte sur les mots-clés (tags)
-             */
-            /**
-             * Etape 1: Le mur concerne un mot-clé en particulier
-             */
+            
             $tagId = intval($_GET['tag_id']);
             ?>
             
@@ -44,14 +38,10 @@ require 'connexion.php'
             <aside>
                 <p>
                 <?php
-                /**
-                 * Etape 3: récupérer le nom du mot-clé
-                 */
+                
                 $laQuestionEnSql = "SELECT * FROM tags WHERE id='$tagId'";
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 $tag = $lesInformations->fetch_assoc();
-                //@todo: afficher le résultat de la ligne ci dessous, remplacer XXX par le label et effacer la ligne ci-dessous
-                //echo "<pre>" . print_r($tag, 1) . "</pre>";
                 
                 
                 $enCoursDeTraitement3 = isset($_POST['like']);
@@ -86,9 +76,7 @@ require 'connexion.php'
             </aside>
             <main>
                 <?php
-                /**
-                 * Etape 3: récupérer tous les messages avec un mot clé donné
-                 */
+                
                 $laQuestionEnSql = "
                     SELECT posts.content,
                     posts.created,
@@ -114,14 +102,10 @@ require 'connexion.php'
                     echo("Échec de la requete : " . $mysqli->error);
                 }
 
-                /**
-                 * Etape 4: @todo Parcourir les messsages et remplir correctement le HTML avec les bonnes valeurs php
-                 */
                 while ($post = $lesInformations->fetch_assoc())
                 {
 
                 
-                    //echo "<pre>" . print_r($post, 1) . "</pre>";
                     ?>                
                     <article>
                         <h3>
@@ -133,7 +117,6 @@ require 'connexion.php'
                         <div>
                             <p><?php
                             $splittedString = explode("\n", $post['content']);
-                            //echo $splittedString;
                             foreach($splittedString as $ligne){
                                 echo $ligne;
                                 echo '<br>';
@@ -149,10 +132,7 @@ require 'connexion.php'
                             <?php
                                 $splittedTag = explode(",", $post['taglist']);
                                 $splittedId = explode(",", $post['tagid']);
-                        //    echo $post['taglist'];
-                        //    echo $post['tagid'];
-                        //    print_r($splittedTag);
-                        //    print_r($splittedId);
+                        
                                 for ($i = 0 ; $i<count($splittedId); $i ++ ):?>
                                     <a href ="tags.php?tag_id=<?php
                                     echo $splittedId[$i];

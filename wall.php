@@ -1,5 +1,5 @@
 <?php
-require 'connexion.php'
+require 'connexion.php';
 ?>
 
 <!doctype html>
@@ -35,38 +35,28 @@ require 'connexion.php'
             <aside>
                 <p>
                 <?php
-                /**
-                 * Etape 3: récupérer le nom de l'utilisateur
-                 */                
+                               
                 $laQuestionEnSql = "SELECT * FROM users WHERE id= '$userId' ";
-                $lesInformations = $mysqli->query($laQuestionEnSql);
-                $user = $lesInformations->fetch_assoc();
-                //@todo: afficher le résultat de la ligne ci dessous, remplacer XXX par l'alias et effacer la ligne ci-dessous
-                //echo "<pre>" . print_r($user, 1) . "</pre>";
+                if(isset($userId)){
+                    $lesInformations = $mysqli->query($laQuestionEnSql);
+                    $user = $lesInformations->fetch_assoc();
+                }
+                
                 $enCoursDeTraitement = isset($_POST['message']);
                     if ($enCoursDeTraitement)
                     {
-                        // on ne fait ce qui suit que si un formulaire a été soumis.
-                        // Etape 2: récupérer ce qu'il y a dans le formulaire @todo: c'est là que votre travaille se situe
-                        // observez le résultat de cette ligne de débug (vous l'effacerez ensuite)
-                        // echo "<pre>" . print_r($_POST, 1) . "</pre>";
-                        // et complétez le code ci dessous en remplaçant les ???
+                        
                         $authorId = $connectedId;
                         $postContent = $_POST['message'];
                         $namePost = $user['alias'];
 
                         $postContent = $mysqli->real_escape_string($postContent);
 
-                        //Etape 3 : Petite sécurité
-                        // pour éviter les injection sql : https://www.w3schools.com/sql/sql_injection.asp
-                        //$authorId = intval($mysqli->real_escape_string($authorId));
-                        //$postContent = $mysqli->real_escape_string($postContent);
-                        //Etape 4 : construction de la requete
+                       
                         $lInstructionSql = "INSERT INTO posts (id, user_id, content, created)
                                 VALUES (NULL, $authorId, '$postContent' , NOW())";
                         
-                        //echo $lInstructionSql;
-                        // Etape 5 : execution
+                        
                         $ok = $mysqli->query($lInstructionSql);
                         if ( ! $ok)
                         {
@@ -162,9 +152,7 @@ require 'connexion.php'
             </aside>
             <main>
                 <?php
-                /** 
-                 * Etape 3: récupérer tous les messages de l'utilisatrice
-                 */
+                
                 $laQuestionEnSql = "
                     SELECT posts.content, posts.created, posts.id, users.alias as author_name, 
                     COUNT(likes.id) as like_number, GROUP_CONCAT(DISTINCT tags.label) AS taglist,
@@ -185,9 +173,7 @@ require 'connexion.php'
                     echo("Échec de la requete : " . $mysqli->error);
                 }
 
-                /**
-                 * Etape 4: @todo Parcourir les messsages et remplir correctement le HTML avec les bonnes valeurs php
-                 */
+                
                 while ($post = $lesInformations->fetch_assoc())
                 {
 

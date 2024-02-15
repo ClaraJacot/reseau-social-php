@@ -1,7 +1,11 @@
 <?php
 session_start();
+if(isset($_GET['user_id'])){
+    $userId =intval($_GET['user_id']);
+}else{
+    $userId = false; 
+}
 
-$userId =  intval($_GET['user_id']);
 $connectedId = $_SESSION['connected_id'];
 
 

@@ -1,6 +1,8 @@
 <?php
 require 'connexion.php';
 if ($connectedId !=0 ): 
+    
+
 
 ?>
 
@@ -56,14 +58,11 @@ if ($connectedId !=0 ):
                         echo "Post liké";
                     } 
                 }
-                /**
-                 * Etape 3: récupérer le nom de l'utilisateur
-                 */
+                
                 $laQuestionEnSql = "SELECT * FROM `users` WHERE id= '$userId' ";
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 $user = $lesInformations->fetch_assoc();
-                //@todo: afficher le résultat de la ligne ci dessous, remplacer XXX par l'alias et effacer la ligne ci-dessous
-                //echo "<pre>" . print_r($user, 1) . "</pre>";
+               
                 ?> </p>
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
@@ -77,9 +76,7 @@ if ($connectedId !=0 ):
             </aside>
             <main>
                 <?php
-                /**
-                 * Etape 3: récupérer tous les messages des abonnements
-                 */
+                
                 $laQuestionEnSql = "
                     SELECT posts.content,
                     posts.created,
@@ -106,10 +103,7 @@ if ($connectedId !=0 ):
                 }
                 while ($post = $lesInformations->fetch_assoc())
                 {
-                /**
-                 * Etape 4: @todo Parcourir les messsages et remplir correctement le HTML avec les bonnes valeurs php
-                 * A vous de retrouver comment faire la boucle while de parcours...
-                 */
+                
                 
                 ?>
                 
@@ -125,7 +119,6 @@ if ($connectedId !=0 ):
                         <div>
                             <p><?php
                             $splittedString = explode("\n", $post['content']);
-                            //echo $splittedString;
                             foreach($splittedString as $ligne){
                                 echo $ligne;
                                 echo '<br>';
@@ -141,10 +134,7 @@ if ($connectedId !=0 ):
                             <?php
                                 $splittedTag = explode(",", $post['taglist']);
                                 $splittedId = explode(",", $post['tagid']);
-                        //    echo $post['taglist'];
-                        //    echo $post['tagid'];
-                        //    print_r($splittedTag);
-                        //    print_r($splittedId);
+                        
                                 for ($i = 0 ; $i<count($splittedId); $i ++ ):?>
                                     <a href ="tags.php?tag_id=<?php
                                     echo $splittedId[$i];
@@ -154,7 +144,7 @@ if ($connectedId !=0 ):
                     </footer>
                 </article>
                 <?php
-                }// et de pas oublier de fermer ici vote while
+                }
                 ?>
 
 
