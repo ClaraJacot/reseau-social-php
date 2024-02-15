@@ -11,7 +11,7 @@ require 'connexion.php'
     </head>
     <body>
         <header>
-            <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/></a>
+            <a href='admin.php'><img src="logo.png" alt="Logo de notre réseau social"/></a>
             <nav id="menu">
                 <a href="news.php">Actualités</a>
                 <a href=<?php if ($connectedId != 0) {echo "wall.php?user_id=" . $connectedId;} else {echo "login.php" ;} ?>>Mur</a>
@@ -29,16 +29,8 @@ require 'connexion.php'
         </header>
         <div id="wrapper">
             <aside>
-                <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
-                <section>
-                    <h3>Présentation</h3>
-                    <p>Sur cette page vous trouverez les derniers messages de
-                        tous les utilisatrices du site.</p>
-                </section>
-            </aside>
-            <main>
-                
-                <?php 
+                <p>
+            <?php 
                     $enCoursDeTraitement3 = isset($_POST['like']);
                     if($enCoursDeTraitement3) {
                         $liker1 = $connectedId;
@@ -91,7 +83,20 @@ require 'connexion.php'
                     }
                     require 'hashtag.php';
                 }
+                ?>
+                </p>
 
+                <img src="news.png" alt="Portrait de l'utilisatrice"/>
+                <section>
+                    <h3>Présentation</h3>
+                    <p>Sur cette page vous trouverez les derniers messages de
+                        toutes les utilisatrices du site.</p>
+                </section>
+            </aside>
+            <main>
+                
+                
+<?php
 
                 $laQuestionEnSql = "
                     SELECT posts.content,
@@ -151,7 +156,7 @@ require 'connexion.php'
                                 <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">
                                 <button type='submit' name='like'>Aimer</button>
                             </form>
-                            <form action="wall.php?user_id=<?php echo $connectedId ?>" method ="post">
+                            <form action="news.php?user_id=<?php echo $connectedId ?>" method ="post">
                                 <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">
                                 <button type='submit' name='dislike'>Ne plus aimer</button>
                             </form>

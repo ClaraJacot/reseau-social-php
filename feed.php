@@ -16,7 +16,7 @@ if ($connectedId !=0 ):
     </head>
     <body>
         <header>
-        <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/> </a>
+        <a href='admin.php'><img src="logo.png" alt="Logo de notre réseau social"/> </a>
             <nav id="menu">
                 <a href="news.php">Actualités</a>
                 <a href="wall.php?user_id=<?php echo $connectedId?>">Mur</a>
@@ -58,18 +58,33 @@ if ($connectedId !=0 ):
                         echo "Post liké";
                     } 
                 }
-                
+                $enCoursDeTraitement4 = isset($_POST['dislike']);
+                if($enCoursDeTraitement4) {
+                    $liker = $connectedId;
+                    $likedPost = $_POST['postId'];
+
+                    $deleteSql = " DELETE FROM likes WHERE user_id = $liker AND post_id = $likedPost";
+                    $ok = $mysqli->query($deleteSql);
+                    if (! $ok)
+                    {
+                        echo "Impossible de dé-liker ce post." . $mysqli->error;                 
+                    } else 
+                    {
+                        echo "Post dé-liké";
+                    } 
+
+                }
                 $laQuestionEnSql = "SELECT * FROM `users` WHERE id= '$userId' ";
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 $user = $lesInformations->fetch_assoc();
                
                 ?> </p>
-                <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+                <img src="feed.png" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
-                    <p>Sur cette page vous trouverez tous les message des utilisatrices
-                        auxquel est abonnée l'utilisatrice <?php echo $user['alias']?>
-                        (n° <?php echo $userId ?>)
+                    <p>Sur cette page vous trouverez tous les messages des utilisatrices
+                        auxquelles est abonnée l'utilisatrice <?php echo $user['alias']?>
+                       
                     </p>
 
                 </section>
@@ -131,6 +146,11 @@ if ($connectedId !=0 ):
                                 <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">
                                 <button type='submit' name='like'>Aimer</button>
                             </form>
+                            <form action="feed.php?user_id=<?php echo $connectedId ?>" method ="post">
+                                <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">
+                                <button type='submit' name='dislike'>Ne plus aimer</button>
+                            </form>
+                            <br>
                             <?php
                                 $splittedTag = explode(",", $post['taglist']);
                                 $splittedId = explode(",", $post['tagid']);
@@ -141,6 +161,12 @@ if ($connectedId !=0 ):
                                 ?>">#<?php echo $splittedTag[$i] ?></a> 
                                 <?php endfor;
                             ?>
+                            </br>
+                            <form action="feed.php?user_id=<?php echo $connectedId ?>" method ="post">
+                                <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">  
+                                <textarea name='reponse'></textarea>
+                                <button type='submit' name='answer'>Répondre</button>
+                            </form>
                     </footer>
                 </article>
                 <?php

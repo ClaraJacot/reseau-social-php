@@ -11,7 +11,7 @@ require 'connexion.php'
     </head>
     <body>
         <header>
-        <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/> </a>
+        <a href='admin.php'><img src="logo.png" alt="Logo de notre réseau social"/> </a>
             <nav id="menu">
                 <a href="news.php">Actualités</a>
                 <a href=<?php if ($connectedId != 0) {echo "wall.php?user_id=" . $connectedId;} else {echo "login.php" ;} ?>>Mur</a>
@@ -63,13 +63,29 @@ require 'connexion.php'
                         echo "Post liké";
                     } 
                 }
+                $enCoursDeTraitement4 = isset($_POST['dislike']);
+                if($enCoursDeTraitement4) {
+                    $liker = $connectedId;
+                    $likedPost = $_POST['postId'];
+
+                    $deleteSql = " DELETE FROM likes WHERE user_id = $liker AND post_id = $likedPost";
+                    $ok = $mysqli->query($deleteSql);
+                    if (! $ok)
+                    {
+                        echo "Impossible de dé-liker ce post." . $mysqli->error;                 
+                    } else 
+                    {
+                        echo "Post dé-liké";
+                    } 
+
+                }
                 ?> </p>
-                <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+                <img src="hashtag.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez les derniers messages comportant
-                        le mot-clé <?php echo $tag['label']?>
-                        (n° <?php echo $tag['id'] ?>)
+                        le mot-clé "<?php echo $tag['label']?>"
+                        
                     </p>
 
                 </section>
@@ -125,9 +141,13 @@ require 'connexion.php'
                         </div>                                            
                         <footer>
                             <small>♥ <?php echo $post['like_number']?></small>
-                            <form action="tags.php?tag_id=1" method ="post">
+                            <form action="tags.php?tag_id=<?php echo $tagId ?>" method ="post">
                                 <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">
                                 <button type='submit' name='like'>Aimer</button>
+                            </form>
+                            <form action="tags.php?tag_id=<?php echo $tagId ?>" method ="post">
+                                <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">
+                                <button type='submit' name='dislike'>Ne plus aimer</button>
                             </form>
                             <?php
                                 $splittedTag = explode(",", $post['taglist']);

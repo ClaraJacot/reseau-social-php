@@ -12,7 +12,7 @@ require 'connexion.php';
     </head>
     <body>
         <header>
-        <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/> </a>
+        <a href='admin.php'><img src="logo.png" alt="Logo de notre réseau social"/> </a>
             <nav id="menu">
                 <a href="news.php">Actualités</a>
                 <a href=<?php if ($connectedId != 0) {echo "wall.php?user_id=" . $connectedId;} else {echo "login.php" ;} ?>>Mur</a>
@@ -122,6 +122,23 @@ require 'connexion.php';
                     } 
 
                 }
+                $ecoutePostReponse = isset($_POST['answer']);
+                if ($ecoutePostReponse)  {
+                    $parentId = $_POST['postId'];
+                    $postContent = $_POST['reponse'];
+                    $ordreSql = "INSERT INTO posts (user_id, content, created, parent_id)
+                    VALUES ($connectedId, '$postContent', NOW(),$parentId)";
+
+                    $ok = $mysqli->query($ordreSql);
+                    if (!$ok)
+                    {
+                        echo "Impossible de répondre" . $mysqli->error;
+                    } else 
+                    {
+                        echo "réponse envoyée!";
+                    }
+                    require 'hashtag.php';
+                }
                 ?> </p>
 
                 <img src="user<?php echo $userId ?>.jpg" alt="Portrait de l'utilisatrice"/>
@@ -130,8 +147,8 @@ require 'connexion.php';
                     <?php if ($connectedId == $userId): ?>
                        <p> Bonjour <?php echo $user['alias'] ?> </p>
                     <?php endif; ?> 
-                    <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <?php echo $user['alias']?>
-                        (n° <?php echo $userId ?>)
+                    <p>Sur cette page vous trouverez tous les message de l'utilisatrice  <?php echo $user['alias']?>
+                        
                     </p>
                     <p><?php if ($connectedId == $userId) :?>
                         <form action="wall.php?user_id=<?php echo  $connectedId?>" method="post">
@@ -223,7 +240,13 @@ require 'connexion.php';
                                 ?>">#<?php echo $splittedTag[$i] ?></a> 
                                 <?php endfor;
                             ?> 
-                            </p>      
+                            </p> 
+                                </br>
+                            <form action="wall.php?user_id=<?php echo $connectedId ?>" method ="post">
+                                <input type = 'hidden' name='postId' value = "<?php echo $post['id'] ?>">  
+                                <textarea name='reponse'></textarea>
+                                <button type='submit' name='answer'>Répondre</button>
+                            </form>     
                         </footer>
                     </article>
                 <?php } ?>
